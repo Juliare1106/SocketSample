@@ -20,11 +20,13 @@ map.on('locationfound', (e) => {
   const newMarker = L.marker(coords);
   newMarker.bindPopup('Su posición');
   map.addLayer(newMarker);
-  socket.emit('coordenadascliente', e.latlng);
+  socket.emit('coordenadasCliente', e.latlng);
 });
 
 // socket new User connected
-socket.on('nuevasCoordenadasCliente', (coords) => {
+socket.on('nuevasCoordenadasCliente', (id,coords) => {
+  console.log("Entra");
+  console.log(id);
   console.log(coords);
   const userIcon = L.icon({
     iconUrl: '/img/icon2.png',
@@ -33,7 +35,7 @@ socket.on('nuevasCoordenadasCliente', (coords) => {
   const newUserMarker = L.marker([coords.lat, coords.lng], {
     icon: userIcon 
   });
-  newUserMarker.bindPopup('New User!');
+  newUserMarker.bindPopup(`Usuario nuevo SOCKET ID: ${id}`);
   map.addLayer(newUserMarker);
 }); 
 
